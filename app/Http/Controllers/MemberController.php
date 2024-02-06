@@ -120,7 +120,7 @@ class MemberController extends Controller
     {
         $valiasi = Validator::make($request->all(), [
             'name' => 'required',
-            'nrp' => 'required|numeric|unique:ms_member',
+            'nrp' => 'required|numeric',
             'email' => 'required|email',
             'noTelp' => 'required|numeric',
             'departemen' => 'required',
@@ -131,7 +131,6 @@ class MemberController extends Controller
             'name.required' => 'Nama wajib diisi',
             'nrp.required' => 'Nama wajib diisi',
             'nrp.numeric' => 'NRP harus berupa angka',
-            'nrp.unique' => 'NRP sudah terdaftar',
             'email.required' => 'Email wajib diisi',
             'email.email' => 'Format email wajib benar',
             'noTelp.required' => 'Nomor telepon wajib diisi',
