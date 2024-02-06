@@ -49,7 +49,6 @@
                         1: 'Information System',
                         2: 'Digitalization',
                         3: 'Command Center'
-                        // Tambahkan peta lain jika ada nilai departemen lainnya
                     };
 
                     return departemenMap[data] || data;
@@ -67,7 +66,6 @@
                         5: 'Developer',
                         6: 'Data Scientist',
                         7: 'Data Analyst'
-                        // Tambahkan peta lain jika ada nilai title lainnya
                     };
 
                     return titleMap[data] || data;
@@ -82,7 +80,6 @@
                         2: 'Bussiness Analyst',
                         3: 'Member',
                         4: 'Non-Member'
-                        // Tambahkan peta lain jika ada nilai role lainnya
                     };
 
                     return roleMap[data] || data;
