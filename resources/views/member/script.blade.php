@@ -94,6 +94,7 @@
         });
     });
 
+    // Collect data dari modal 2 page
     function collectFormData() {
         var formData = {};
 
@@ -114,9 +115,32 @@
         simpan();
     });
 
+    // Proses Button Update
+    $('body').on('click', '.button-edit', function(e) {
+        var id = $(this).data('id');
+        $.ajax({
+            url: 'memberAjax/' + id + '/edit',
+            type: 'GET',
+            success: function(response) {
+                $('#name').val(response.result.name);
+                $('#nrp').val(response.result.nrp);
+                $('#email').val(response.result.email);
+                $('#noTelp').val(response.result.noTelp);
+                $('#departemen').val(response.result.departemen);
+                $('#title').val(response.result.title);
+                $('#role').val(response.result.role);
+                console.log(response.result);
+                $('.button-simpan').click(function() {
+                    simpan(id);
+                });
+            }
+        });
+    });
+
     // Fungsi Simpan Data
     function simpan(id = '') {
         var formData = collectFormData();
+        formData['_token'] = '{{ csrf_token() }}';
         console.log(formData);
 
         if (id == '') {
@@ -139,8 +163,6 @@
                     });
                     $('.alert-danger').append("</ul>");
                 } else {
-                    $('.alert-success').removeClass('d-none');
-                    $('.alert-success').html(response.success);
                     $('#name').val('');
                     $('#nrp').val('');
                     $('#email').val('');
@@ -149,14 +171,66 @@
                     $('#title').val('');
                     $('#role').val('');
                     $('input[name="gender"]:checked').val();
+
+                    resetAddMemberModal();
+                    $('.alert-success').removeClass('d-none');
+                    $('.alert-success').html(response.success);
+                    setTimeout(function() {
+                        $('.alert-success').addClass('d-none');
+                        $('.alert-success').html('');
+                    }, 3000);
+
                 }
                 $('#memberDatatable').DataTable().ajax.reload();
             }
         });
     }
 
+    // Proses Button Delete
+    $('body').on('click', '.button-delete', function(e) {
+        var id = $(this).data('id');
+        console.log(id);
+
+        // Ambil token CSRF dari meta tag
+        var csrfToken = $('meta[name="csrf-token"]').attr('content');
+
+        // Show the delete confirmation modal
+        $('#deleteModal').modal('show');
+
+        // Handle deletion upon confirmation
+        $('#confirmDelete').off('click').on('click', function() {
+            $.ajax({
+                url: 'memberAjax/' + id,
+                type: 'DELETE',
+                headers: {
+                    'X-CSRF-TOKEN': csrfToken // Tambahkan token CSRF ke header
+                },
+                success: function() {
+                    $('#memberDatatable').DataTable().ajax.reload();
+                    // Menampilkan notifikasi bahwa data berhasil dihapus
+                    showDeleteSuccessModal();
+                },
+                error: function() {
+                    // Menampilkan notifikasi jika terjadi kesalahan saat menghapus data
+                    showNotification('error');
+                }
+            });
+
+            // Hide the modal after deletion
+            $('#deleteModal').modal('hide');
+        });
+    });
+
+    $('#addMemberModal').on('hidden.bs.modal', function() {
+        resetAddMemberModal();
+    });
+
+    $('#closeModalBtn').click(function() {
+        resetAddMemberModal();
+    });
+
     // Clear Modal
-    $('#memberDatatable').on('hidden.bs.modal', function() {
+    function resetAddMemberModal() {
         $('#name').val('');
         $('#nrp').val('');
         $('#email').val('');
@@ -164,14 +238,28 @@
         $('#departemen').val('');
         $('#title').val('');
         $('#role').val('');
-        $('#gender').val('1');
+        $('input[name="gender"]').prop('checked', false);
+        $('input[name="gender"][value="1"]').prop('checked', true);
+
+        $('.page').hide();
+        $('[data-page="1"]').show();
 
         $('.alert-danger').addClass('d-none');
         $('.alert-danger').html('');
 
         $('.alert-success').addClass('d-none');
         $('.alert-success').html('');
-    });
+    }
+
+    // Fungsi Notif Delete
+    function showDeleteSuccessModal() {
+        $('#deleteSuccessModal').modal('show');
+
+        // Set a timeout to hide the modal after 3000 milliseconds (3 seconds)
+        setTimeout(function() {
+            $('#deleteSuccessModal').modal('hide');
+        }, 1500);
+    }
 
     // Next and Previous Modal
     function nextPage() {

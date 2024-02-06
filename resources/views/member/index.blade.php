@@ -1,7 +1,6 @@
 @extends('dashboard.main')
 
 @section('container')
-<meta name="csrf-token" content="{{ csrf_token() }}">
 <div class="container mt-4">
 	<nav aria-label="breadcrumb">
 		<ol class="breadcrumb">
@@ -29,41 +28,40 @@
 								<span class="fw-mediumbold">New</span>
 								<span class="fw-light">Member</span>
 							</h4>
-							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<button type="button" id="closeModalBtn" class="close" data-dismiss="modal" aria-label="Close">
 								<span aria-hidden="true">&times;</span>
 							</button>
 						</div>
 						<div class="modal-body">
 							<div class="page" data-page="1">
-								<p class="small">Add members, create your streamline, and build stunning projects (page 1)</p>
+								<p class="small">Add members, create your streamline, and build stunning projects (page 1/2)</p>
 								<form>
-									@csrf
 									<!-- Form fields for page 1 -->
 									<div class="alert alert-danger d-none"></div>
 									<div class="alert alert-success d-none"></div>
 									<div class="row">
 										<div class="col-sm-12">
 											<div class="form-group form-group-default">
-												<label>Name</label>
-												<input id="name" type="text" class="form-control" placeholder="fill name">
+												<label for="name">Name<span class="text-danger">*</span></label>
+												<input id="name" type="text" class="form-control" placeholder="fill name" required>
 											</div>
 										</div>
 										<div class="col-sm-12">
 											<div class="form-group form-group-default">
-												<label>NRP</label>
-												<input id="nrp" type="text" class="form-control" placeholder="fill nrp">
+												<label for="nrp">NRP<span class="text-danger">*</span></label>
+												<input id="nrp" type="text" class="form-control" placeholder="fill nrp" required>
 											</div>
 										</div>
 										<div class="col-sm-12">
 											<div class="form-group form-group-default">
-												<label>Email</label>
-												<input id="email" type="email" class="form-control" placeholder="fill email">
+												<label for="email">Email<span class="text-danger">*</span></label>
+												<input id="email" type="email" class="form-control" placeholder="fill email" required>
 											</div>
 										</div>
 										<div class="col-sm-12">
 											<div class="form-group form-group-default">
-												<label>Nomor Telepon</label>
-												<input id="noTelp" type="text" class="form-control" placeholder="fill telepon">
+												<label for="noTelp">Nomor Telepon<span class="text-danger">*</span></label>
+												<input id="noTelp" type="text" class="form-control" placeholder="fill telepon" required>
 											</div>
 										</div>
 									</div>
@@ -74,17 +72,16 @@
 							</div>
 
 							<div class="page" data-page="2" style="display: none;">
-								<p class="small">Add members, create your streamline, and build stunning projects (page 2)</p>
+								<p class="small">Add members, create your streamline, and build stunning projects (page 2/2)</p>
 								<form>
 									<!-- Form fields for page 2 -->
-									@csrf
 									<div class="alert alert-danger d-none"></div>
 									<div class="alert alert-success d-none"></div>
 									<div class="row">
 										<div class="col-sm-12">
 											<div class="form-group form-group-default">
-												<label for="departemen">Departement</label>
-												<select id="departemen" class="form-control">
+												<label for="departemen">Departement<span class="text-danger">*</span></label>
+												<select id="departemen" class="form-control" required>
 													<option value="">Select Departement</option>
 													<option value="1">Information System</option>
 													<option value="2">Digitalization</option>
@@ -95,8 +92,8 @@
 										</div>
 										<div class="col-md-6 pr-0">
 											<div class="form-group form-group-default">
-												<label for="title">Title</label>
-												<select id="title" class="form-control">
+												<label for="title">Title<span class="text-danger">*</span></label>
+												<select id="title" class="form-control" required>
 													<option value="">Select Title</option>
 													<option value="1">Division</option>
 													<option value="2">Manager</option>
@@ -111,8 +108,8 @@
 
 										<div class="col-md-6">
 											<div class="form-group form-group-default">
-												<label for="role">Role</label>
-												<select id="role" class="form-control">
+												<label for="role">Role<span class="text-danger">*</span></label>
+												<select id="role" class="form-control" required>
 													<option value="">Select Role</option>
 													<option value="1">Admin</option>
 													<option value="2">Business Analyst</option>
@@ -123,7 +120,7 @@
 										</div>
 										<div class="col-md-12">
 											<div class="form-group form-group-default">
-												<label for="gender" class="mr-3">Gender</label>
+												<label for="gender" class="mr-3">Gender<span class="text-danger">*</span></label>
 												<div class="form-check form-check-inline">
 													<input class="form-check-input" type="radio" name="gender" id="male" value="1" checked>
 													<label class="form-check-label" for="male">Laki-laki</label>
@@ -148,7 +145,46 @@
 					</div>
 				</div>
 			</div>
-
+			<!-- Delete Confirmation Modal -->
+			<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<!-- Modal Header -->
+						<div class="modal-header">
+							<h5 class="modal-title" id="deleteModalLabel">Konfirmasi Hapus</h5>
+							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+						</div>
+						<!-- Modal Body -->
+						<div class="modal-body">
+							<p>Yakin ingin menghapus data ini?</p>
+						</div>
+						<!-- Modal Footer -->
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+							<button type="button" class="btn btn-danger" id="confirmDelete">Hapus</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- Modal Delete Notification-->
+			<div class="modal" id="deleteSuccessModal" tabindex="-1" role="dialog">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title">Notifikasi</h5>
+							<button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body">
+							<p>Data berhasil dihapus!</p>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+						</div>
+					</div>
+				</div>
+			</div>
 			<div class="table-responsive">
 				<table id="memberDatatable" class="display table table-striped table-hover">
 					<thead>

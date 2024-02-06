@@ -45,8 +45,8 @@ class MemberController extends Controller
     {
         $valiasi = Validator::make($request->all(), [
             'name' => 'required',
-            'nrp' => 'required|numeric',
-            'email' => 'required|email|unique:pegawai',
+            'nrp' => 'required|numeric|unique:ms_member',
+            'email' => 'required|email|unique:ms_member',
             'noTelp' => 'required|numeric',
             'departemen' => 'required',
             'title' => 'required',
@@ -55,7 +55,8 @@ class MemberController extends Controller
         ], [
             'name.required' => 'Nama wajib diisi',
             'nrp.required' => 'Nama wajib diisi',
-            'nrp.numeric' => 'Nomor telepon harus berupa angka',
+            'nrp.numeric' => 'NRP harus berupa angka',
+            'nrp.unique' => 'NRP sudah terdaftar',
             'email.required' => 'Email wajib diisi',
             'email.unique' => 'Email sudah terdaftar',
             'email.email' => 'Format email wajib benar',
@@ -104,7 +105,8 @@ class MemberController extends Controller
      */
     public function edit($id)
     {
-        //
+        $data = MsMember::where("id", $id)->first();
+        return response()->json(['result' => $data]);
     }
 
     /**
@@ -116,7 +118,46 @@ class MemberController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $valiasi = Validator::make($request->all(), [
+            'name' => 'required',
+            'nrp' => 'required|numeric|unique:ms_member',
+            'email' => 'required|email',
+            'noTelp' => 'required|numeric',
+            'departemen' => 'required',
+            'title' => 'required',
+            'role' => 'required',
+            'gender' => 'required',
+        ], [
+            'name.required' => 'Nama wajib diisi',
+            'nrp.required' => 'Nama wajib diisi',
+            'nrp.numeric' => 'NRP harus berupa angka',
+            'nrp.unique' => 'NRP sudah terdaftar',
+            'email.required' => 'Email wajib diisi',
+            'email.email' => 'Format email wajib benar',
+            'noTelp.required' => 'Nomor telepon wajib diisi',
+            'noTelp.numeric' => 'Nomor telepon harus berupa angka',
+            'departemen.required' => 'Wajib memilih Departemen',
+            'title.required' => 'Wajib memilih Title',
+            'role.required' => 'Wajib memilih Role',
+            'gender.required' => 'Wajib memilih Gender',
+        ]);
+
+        if ($valiasi->fails()) {
+            return response()->json(['errors' => $valiasi->errors()]);
+        } else {
+            $data = [
+                'name' => $request->name,
+                'nrp' => $request->nrp,
+                'email' => $request->email,
+                'noTelp' => $request->noTelp,
+                'departemen' => $request->departemen,
+                'title' => $request->title,
+                'role' => $request->role,
+                'gender' => $request->gender
+            ];
+            MsMember::where('id', $id)->update($data);
+            return response()->json(['success' => "Berhasil update data"]);
+        }
     }
 
     /**
@@ -127,6 +168,6 @@ class MemberController extends Controller
      */
     public function destroy($id)
     {
-        //
+        MsMember::where("id", $id)->delete();
     }
 }

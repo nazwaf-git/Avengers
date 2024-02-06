@@ -53,7 +53,6 @@ class LoginController extends Controller
 
         $response = $this->satriaLogin($request->email, $request->password);
         if($response != null) {
-            // return redirect()->route('alat');    
             if (Auth::attempt($request->only('email', 'password'))) {
                 return redirect()->route('dashboard');
             } else {
