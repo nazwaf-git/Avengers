@@ -175,7 +175,7 @@
                     setTimeout(function() {
                         $('.alert-success').addClass('d-none');
                         $('.alert-success').html('');
-                    }, 3000);
+                    }, 5000);
 
                 }
                 $('#memberDatatable').DataTable().ajax.reload();
