@@ -6,20 +6,15 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class MsMember extends Model
+class MsStreamline extends Model
 {
     use SoftDeletes;
     use HasFactory;
-    public $table = "ms_member";
+    public $table = "ms_streamline";
     protected $fillable = [
-        "name",
-        "nrp",
-        "email",
-        "noTelp",
-        "departemen",
-        "title",
-        "role",
-        "gender",
+        "nameStreamline",
+        "jumlah",
+        "leader",
         "created_by",
         "updated_by",
     ];

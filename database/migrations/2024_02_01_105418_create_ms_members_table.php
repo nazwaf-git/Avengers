@@ -14,7 +14,7 @@ class CreateMsMembersTable extends Migration
     public function up()
     {
         Schema::create('ms_member', function (Blueprint $table) {
-            $table->id();
+            $table->idMember();
             $table->string('name');
             $table->string('nrp')->unique();
             $table->string('email')->unique();
@@ -23,6 +23,9 @@ class CreateMsMembersTable extends Migration
             $table->integer('title');
             $table->integer('role');
             $table->integer('gender');
+            $table->string('deskripsi_notes');
+            $table->string('created_by');
+            $table->string('updated_by');
             $table->timestamps();
             $table->softDeletes();
         });
