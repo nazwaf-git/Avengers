@@ -37,6 +37,7 @@ class AppServiceProvider extends ServiceProvider
         view()->composer(['dashboard.sidebar'], function ($view){
             
             $access_token = Auth::user()->access_token;
+            // dd(Auth::user());
             $listmenu = Controller::menulistSatria($access_token);
             $data = array(
                 'listmenu' => $listmenu,
