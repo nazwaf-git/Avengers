@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\MsMember;
 use Illuminate\Http\Request;
 
 class StreamlineController extends Controller
@@ -14,6 +15,15 @@ class StreamlineController extends Controller
     public function index()
     {
         //
+    }
+
+    public function getMember()
+    {
+        // Mengambil data MsMember dengan title "Business Analyst"
+        $members = MsMember::where('title', '4')->get();
+
+        // Mengirim data ke view
+        return view('streamline.index', ['members' => $members]);
     }
 
     /**
