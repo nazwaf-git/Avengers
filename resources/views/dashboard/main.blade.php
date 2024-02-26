@@ -40,7 +40,6 @@
         <div class="main-header">
             <!-- Logo Header -->
             <div class="logo-header" data-background-color="blue">
-
                 <a href="{{ route('dashboard') }}" class="logo">
                     <img src="../img/logo.svg" alt="navbar brand" class="navbar-brand">
                 </a>
@@ -342,9 +341,9 @@
                         </div>
                     </div>
                     <ul class="nav nav-primary">
-                        
-                    <!-- Sidebar -->
-                    @include('dashboard.sidebar')
+
+                        <!-- Sidebar -->
+                        @include('dashboard.sidebar')
 
                     </ul>
                 </div>

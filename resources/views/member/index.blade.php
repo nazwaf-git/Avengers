@@ -49,7 +49,7 @@
 										<div class="col-sm-12">
 											<div class="form-group form-group-default">
 												<label for="nrp">NRP<span class="text-danger">*</span></label>
-												<input id="nrp" type="text" class="form-control" placeholder="fill nrp" required>
+												<input id="nrp" type="text" class="form-control" placeholder="fill nrp" required maxlength="13">
 											</div>
 										</div>
 										<div class="col-sm-12">
@@ -61,7 +61,7 @@
 										<div class="col-sm-12">
 											<div class="form-group form-group-default">
 												<label for="noTelp">Nomor Telepon<span class="text-danger">*</span></label>
-												<input id="noTelp" type="text" class="form-control" placeholder="fill telepon" required>
+												<input id="noTelp" type="text" class="form-control" placeholder="fill telepon" required maxlength="13">
 											</div>
 										</div>
 									</div>
