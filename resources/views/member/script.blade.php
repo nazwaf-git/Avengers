@@ -115,6 +115,7 @@
     // Proses Button Update
     $('body').on('click', '.button-edit', function(e) {
         var id = $(this).data('id');
+        console.log(id);
         $.ajax({
             url: 'memberAjax/' + id + '/edit',
             type: 'GET',
@@ -224,6 +225,20 @@
 
     $('#closeModalBtn').click(function() {
         resetAddMemberModal();
+    });
+
+    // Nomor Telepon
+    document.getElementById('noTelp').addEventListener('input', function(e) {
+        var inputValue = e.target.value;
+        var numericValue = inputValue.replace(/\D/g, ''); // Hanya menyisakan karakter angka
+        e.target.value = numericValue;
+    });
+
+    // NRP
+    document.getElementById('nrp').addEventListener('input', function(e) {
+        var inputValue = e.target.value;
+        var numericValue = inputValue.replace(/\D/g, ''); // Hanya menyisakan karakter angka
+        e.target.value = numericValue;
     });
 
     // Clear Modal

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\MemberController;
+use App\Http\Controllers\StreamlineController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -24,8 +25,13 @@ Route::post('login-in', [App\Http\Controllers\Auth\LoginController::class, 'auth
 Route::get('/member', function () {
     return view('member.index');
 });
+Route::resource('memberAjax', MemberController::class);
+
+Route::get('/streamline', function () {
+    return view('streamline.index');
+});
+Route::resource('streamlineAjax', StreamlineController::class);
 
 Auth::routes();
 
 Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('dashboard');
-Route::resource('memberAjax', MemberController::class);
