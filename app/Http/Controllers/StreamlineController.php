@@ -17,13 +17,13 @@ class StreamlineController extends Controller
         //
     }
 
-    public function getMember()
+    public function getLeader()
     {
         // Mengambil data MsMember dengan title "Business Analyst"
-        $members = MsMember::where('title', '4')->get();
+        $leaders = MsMember::where('title', '4')->get();
 
         // Mengirim data ke view
-        return view('streamline.index', ['members' => $members]);
+        return view('streamline.index', ['leaders' => $leaders]);
     }
 
     /**
