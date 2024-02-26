@@ -65,8 +65,8 @@
                                                     <option value="">Pilih Leader</option>
 
                                                     <!-- Menggunakan data yang dikirim dari controller -->
-                                                    @foreach($members as $member)
-                                                    <option value="{{ $member->id }}">{{ $member->name }}</option>
+                                                    @foreach($leaders as $leader)
+                                                    <option value="{{ $leader->id }}">{{ $leader->name }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>

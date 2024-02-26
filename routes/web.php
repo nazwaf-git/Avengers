@@ -31,7 +31,7 @@ Route::get('/streamline', function () {
     return view('streamline.index');
 });
 Route::resource('streamlineAjax', StreamlineController::class);
-Route::get('/streamline', [StreamlineController::class, 'getMember']);
+Route::get('/streamline', [StreamlineController::class, 'getLeader']);
 
 Auth::routes();
 
