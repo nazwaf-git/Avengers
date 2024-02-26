@@ -64,18 +64,10 @@
                                                     <!-- Opsi default -->
                                                     <option value="">Pilih Leader</option>
 
-                                                    <!-- Mengambil data dari database MsMember dengan title "Business Analyst" -->
-                                                    @php
-                                                    use App\Models\MsMember;
-
-                                                    // Query menggunakan Eloquent untuk mengambil data MsMember dengan title "Business Analyst"
-                                                    $members = MsMember::where('title', '4')->get();
-
-                                                    // Tampilkan data sebagai opsi dropdown
-                                                    foreach ($members as $member) {
-                                                    echo "<option value='" . $member->id . "'>" . $member->name . "</option>";
-                                                    }
-                                                    @endphp
+                                                    <!-- Menggunakan data yang dikirim dari controller -->
+                                                    @foreach($members as $member)
+                                                    <option value="{{ $member->id }}">{{ $member->name }}</option>
+                                                    @endforeach
                                                 </select>
                                             </div>
                                         </div>
